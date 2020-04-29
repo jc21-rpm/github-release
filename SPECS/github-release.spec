@@ -1,14 +1,15 @@
 %define debug_package %{nil}
 
-%global gh_user aktau
+%global gh_user github-release
 
 Name:           github-release
-Version:        0.7.2
+Version:        0.8.0
 Release:        1%{?dist}
 Summary:        Commandline app to create and edit releases on Github (and upload artifacts)
 Group:          Applications/System
 License:        MIT
 URL:            https://github.com/%{gh_user}/%{name}
+Source:         https://github.com/%{gh_user}/%{name}/archive/v%{version}.tar.gz
 BuildRequires:  git golang
 
 %description
@@ -20,12 +21,10 @@ not really that user-friendly. For example, you need to first query the API
 to find the id of the release you want, before you can upload an artifact.
 
 %prep
-wget https://github.com/%{gh_user}/%{name}/archive/v%{version}.tar.gz
-tar xzf v%{version}.tar.gz
+%setup -qn %{name}-%{version}
 mkdir -p %{_builddir}/src/github.com/%{gh_user}/
 cd %{_builddir}/src/github.com/%{gh_user}/
 ln -snf %{_builddir}/%{name}-%{version} %{name}
-cd %{name}
 
 %build
 export GOPATH="%{_builddir}"
@@ -41,6 +40,9 @@ install -Dm0755 %{_builddir}/bin/%{name} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Thu Apr 30 2020 Jamie Curnow <jc@jc21.com> 0.8.0-1
+- v0.8.0
+
 * Mon Sep 9 2019 Jamie Curnow <jc@jc21.com> 0.7.2-1
 - Initial Spec
 
