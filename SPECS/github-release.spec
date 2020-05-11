@@ -22,19 +22,12 @@ to find the id of the release you want, before you can upload an artifact.
 
 %prep
 %setup -qn %{name}-%{version}
-mkdir -p %{_builddir}/src/github.com/%{gh_user}/
-cd %{_builddir}/src/github.com/%{gh_user}/
-ln -snf %{_builddir}/%{name}-%{version} %{name}
 
 %build
-export GOPATH="%{_builddir}"
-export PATH=$PATH:"%{_builddir}"/bin
-cd %{_builddir}/src/github.com/%{gh_user}/%{name}
-go list -f '{{join .Deps "\n"}}' | xargs go list -e -f '{{if not .Standard}}{{.ImportPath}}{{end}}' | grep -v "%{name}/github" | xargs go get -u
-go build -o %{_builddir}/bin/%{name}
+make
 
 %install
-install -Dm0755 %{_builddir}/bin/%{name} %{buildroot}%{_bindir}/%{name}
+install -Dm0755 %{name} %{buildroot}%{_bindir}/%{name}
 
 %files
 %{_bindir}/%{name}
