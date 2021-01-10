@@ -3,7 +3,7 @@
 %global gh_user github-release
 
 Name:           github-release
-Version:        0.8.1
+Version:        0.10.0
 Release:        1%{?dist}
 Summary:        Commandline app to create and edit releases on Github (and upload artifacts)
 Group:          Applications/System
@@ -33,6 +33,9 @@ install -Dm0755 %{name} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Mon Jan 11 2021 Jamie Curnow <jc@jc21.com> 0.10.0-1
+- v0.10.0
+
 * Sat May 2 2020 Jamie Curnow <jc@jc21.com> 0.8.1-1
 - v0.8.1
 
